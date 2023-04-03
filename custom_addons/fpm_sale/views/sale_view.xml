@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_tax_fpm" model="ir.ui.view">
+            <field name="name">sale.order.form.tax.fpm</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="user_id"/>
+                    <!--field name="_barcode_scanned" widget="sale_barcode_handler"/-->
+                </xpath>
+                <xpath expr="//group[@name='sales_person']//field[@name='user_id']" position="replace"/>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="before">
+                     <field name="last_price"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='tax_id']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//form//field[@name='tax_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+<!--                <xpath expr="//group[@name='sale_total']//field[@name='amount_untaxed']" position="attributes">-->
+<!--			   		<attribute name="invisible">1</attribute>-->
+<!--			    </xpath>-->
+<!--                <xpath expr="//group[@name='sale_total']//field[@name='amount_tax']" position="attributes">-->
+<!--			   		<attribute name="invisible">1</attribute>-->
+<!--			    </xpath>-->
+<!--			    <xpath expr="//group[@name='sale_total']//div[hasclass('oe_subtotal_footer_separator')]" position="replace">-->
+
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='amount_total']" position="replace">-->
+<!--                    <field name="amount_total" widget='monetary' options="{'currency_field': 'currency_id'}"/>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+
+        <record id="view_sale_order_barcode_inherit_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form position="inside">
+                    <field name="_barcode_scanned" widget="barcode_handler"/>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

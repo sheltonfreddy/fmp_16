@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <report-->
+<!--            id="account.report_invoice_with_payments"-->
+<!--            model="account.move"-->
+<!--            string="Invoices without Payment FPM"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="fpm_account.report_invoice_fpm"-->
+<!--            file="invoice_report"-->
+<!--            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"-->
+<!--            print_report_name="(object._get_printed_report_name())"-->
+<!--        />-->
+
+    </data>
+</odoo>

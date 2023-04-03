@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="partner_invoice_report_view" model="ir.ui.view">
+            <field name="name">Partner Invoice Reports</field>
+            <field name="model">invoice.partner.report</field>
+            <field name="arch" type="xml">
+                <form string="Credit Note">
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="inv_status"/>
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <footer>
+                        <button string='Print' name="print_report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                   </form>
+                </field>
+            </record>
+
+
+
+    <record id="action_partner_invoice_report_view" model="ir.actions.act_window">
+        <field name="name">Partner Invoices</field>
+        <field name="res_model">invoice.partner.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="partner_invoice_report_view"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+<!--    <menuitem name="Partner Invoices"-->
+<!--              action="action_partner_invoice_report_view"-->
+<!--              id="menu_action_report_partner_invoice_view"-->
+<!--              parent="accounting_pdf_reports.menu_finance_partner_reports"-->
+<!--              groups="account.group_account_invoice"-->
+<!--              sequence="5"/>-->
+        <menuitem id="menu_partner_invoice"
+              name="Partner Invoices"
+              sequence="200"
+              action="action_partner_invoice_report_view"
+              parent="accounting_pdf_reports.menu_finance_partner_reports"/>
+
+
+    </data>
+</odoo>
