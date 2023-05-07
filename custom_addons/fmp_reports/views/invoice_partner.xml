@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <template id="report_invoice_partner">
         <t t-call="web.html_container">
             <t t-call="web.internal_layout">
                 <div class="page">
-                    <h3> Customer Invoice Report</h3>
+                    <style>
+                        .page {
+                            font-family: Arial, sans-serif;
+                        }
+                        h3 {
+                            text-align: center;
+                            margin-bottom: 20px;
+                            color: #333;
+                        }
+                        .date-range {
+                            text-align: center;
+                            margin-bottom: 10px;
+                            font-weight: bold;
+                        }
+                        .table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        .table th, .table td {
+                            border: 1px solid #dddddd;
+                            text-align: left;
+                            padding: 8px;
+                        }
+                        .table th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                        }
+                        .text-right {
+                            text-align: right;
+                        }
+                    </style>
+                    <h3>Customer Invoice Report</h3>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <t t-if="data['form']['date_from']"><strong>From</strong> <span t-esc="data['form']['date_from']"/><br/></t>
-                            <t t-if="data['form']['date_to']"><strong>to </strong><span t-esc="data['form']['date_to']"/></t>
+                        <div class="col-xs-12 date-range">
+                            <t t-if="data['form']['date_from']">From <span t-esc="data['form']['date_from']"/></t>
+                            <t t-if="data['form']['date_to']"> to <span t-esc="data['form']['date_to']"/></t>
                         </div>
                     </div>
                     <table class="table table-condensed">
@@ -19,8 +49,7 @@
                                 <th>Invoice Date</th>
                                 <th>Invoice Number</th>
                                 <th>Invoice Status</th>
-                                <th>Amount Total</th>
-
+                                <th class="text-right">Amount Total</th>
                             </tr>
                         </thead>
                         <tr t-foreach="invoices" t-as="line">
@@ -28,36 +57,16 @@
                             <td><span t-esc="line.get('date_invoice')"/></td>
                             <td><span t-esc="line.get('invoice_number')"/></td>
                             <td><span t-esc="line.get('state')"/></td>
-                            <td><span t-att-style="style" t-esc="line.get('amount_total')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                            <td class="text-right"><span t-att-style="style" t-esc="line.get('amount_total')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                         </tr>
                         <tr>
                             <td />
                             <td />
                             <td />
                             <td class="text-right"><strong>Total :  </strong></td>
-                            <td><strong><span t-att-style="style" t-esc="data['total_amt']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></strong></td>
+                            <td class="text-right"><strong><span t-att-style="style" t-esc="data['total_amt']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></strong></td>
                         </tr>
-
                     </table>
-                    <!--div class="clearfix">
-                        <div id="total" class="row">
-                            <div class="col-xs-4 pull-right">
-                                <table class="table table-condensed" style="min-width: 250px;max-width: 400px;border-bottom:1px solid #dddddd;">
-                                    <tr class="border-black" style="border-bottom:1px solid #dddddd;">
-
-                                    </tr>
-
-                                    <tr class="border-black">
-                                        <td><strong>Total</strong></td>
-                                        <td class="text-right">
-                                            <span t-att-style="style" t-esc="data['total_amt']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
-                                        </td>
-
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div-->
                 </div>
             </t>
         </t>
