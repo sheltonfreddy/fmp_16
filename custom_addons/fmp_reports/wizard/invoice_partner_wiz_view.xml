@@ -27,7 +27,7 @@
         <field name="name">Partner Invoices</field>
         <field name="res_model">invoice.partner.report</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form</field>
         <field name="view_id" ref="partner_invoice_report_view"/>
         <field name="context">{}</field>
         <field name="target">new</field>
@@ -39,11 +39,18 @@
 <!--              parent="accounting_pdf_reports.menu_finance_partner_reports"-->
 <!--              groups="account.group_account_invoice"-->
 <!--              sequence="5"/>-->
+
+        <menuitem id="menu_fpm_reports"
+                  name="FPM Reports"
+                  sequence="1"
+                  groups="account.group_account_user,account.group_account_manager"
+                  parent="account.menu_finance_configuration"/>
         <menuitem id="menu_partner_invoice"
-              name="Partner Invoices"
-              sequence="200"
-              action="action_partner_invoice_report_view"
-              parent="accounting_pdf_reports.menu_finance_partner_reports"/>
+                name="Partner Invoicesssss"
+                sequence="20"
+                action="action_partner_invoice_report_view"
+                groups="account.group_account_user,account.group_account_manager"
+                parent="menu_fpm_reports"/>
 
 
     </data>

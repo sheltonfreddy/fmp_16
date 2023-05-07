@@ -15,6 +15,6 @@ class InvoicePartner(models.TransientModel):
     date_from = fields.Date(string='Start Date', required=True)
     date_to = fields.Date(string='End Date', required=True)
 
-    def print_report(self, data):
+    def print_report(self):
         data = {'form': self.read(['date_from', 'date_to', 'partner_id', 'inv_status'])[0]}
         return self.env.ref('fmp_reports.action_report_partner_invoice').report_action(self, data=data, config=False)
