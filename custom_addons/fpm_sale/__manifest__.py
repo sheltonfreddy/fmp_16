@@ -13,6 +13,7 @@
        # 'report/sale_report_templates.xml',
         'report/sale_report.xml',
         'views/sale_view.xml',
+        'views/assets.xml',
 
     ],
     'installable': True,
