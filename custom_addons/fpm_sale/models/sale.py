@@ -48,49 +48,98 @@ class SaleOrder(models.Model):
     #     if product and weight:
     #         weight = barcode_weight[1]
     #         self._add_product(product, weight)
+    #
+    # def _add_product(self, product, weight, qty=1.0):
+    #
+    #     order_line = self.order_line.filtered(lambda r: r.product_id.id == product.id and
+    #                                                     (r.weights and r.weights.split(',') and
+    #                                                      len(r.weights.split(',')) < 5))
+    #     print(order_line, "oooooooooooo")
+    #     line_found = False
+    #
+    #     if order_line:
+    #         for line in order_line:
+    #             print("Checking line:", line.id, line.weights)
+    #             if line.weights and line.weights.split(',') and len(line.weights.split(',')) < 5:
+    #                 line.weights += ',' + str(weight)
+    #                 line.onchange_weights()
+    #                 line_found = True
+    #                 print("Updated line:", line.id, line.weights)
+    #                 break
+    #
+    #     if not line_found:
+    #         vals = {
+    #             'product_id': product.id,
+    #             'product_uom': product.uom_id.id,
+    #             'state': 'draft',
+    #             'weights': str(weight)  # Initialize weights as a string
+    #         }
+    #         line = self.order_line.new(vals)
+    #         line.onchange_weights()
+    #         self.order_line += line
+    #         print("Created new line:", line.id, line.weights)
 
     def _add_product(self, product, weight, qty=1.0):
-        order_line = self.order_line.filtered(lambda r: r.product_id.id == product.id and
-                                                        (r.weights and r.weights.split(',') and
-                                                         len(r.weights.split(',')) < 5))
-        if order_line:
-            for line in order_line:
-                if line.weights and line.weights.split(',') and len(line.weights.split(',')) < 5:
-                    line.weights += ',' + weight
-                    line.onchange_weights()
-                    break
-            else:
-                vals = {
-                    'product_id': product.id,
-                    'product_uom': product.uom_id.id,
-                    'state': 'draft',
-                    'weights': weight
-                }
-                line = self.order_line.new(vals)
-                line.onchange_weights()
-                self.order_line += line
-        else:
-            vals = {
+        weight = float(weight)  # Convert weight to float before processing
+        existing_line = False
+
+        for line in self.order_line:
+            line_weight = line.product_id.weight
+            weights = line.x_studio_field_mu5dT.split(',')
+            weights = [float(w) for w in weights]  # Convert all weights to float
+
+            if line.product_id == product and float(line_weight) == weight and len(
+                    weights) < 5:  # Compare float values and check if there are less than 5 weights
+                existing_line = True
+                line.product_uom_qty += 1
+                weights.append(weight)
+                line.x_studio_field_mu5dT = ','.join([str(float(w)) for w in weights])  # Store weights as strings
+                break
+
+        if not existing_line:
+            new_line = self.order_line.new({
                 'product_id': product.id,
+                'product_uom_qty': 1,
                 'product_uom': product.uom_id.id,
-                'state': 'draft',
-                'weights': weight
-            }
-            line = self.order_line.new(vals)
-            line.onchange_weights()
-            self.order_line += line
+                'price_unit': product.list_price,
+                'x_studio_field_mu5dT': str(weight),  # Store weight as a string
+                'name': product.name,
+            })
+            self.order_line += new_line
 
     def on_barcode_scanned(self, barcode):
         if self.state != 'draft':
             return
+        print(barcode, "BBBBBBBBB", len(barcode))
         if barcode:
-            barcode_weight = barcode.split()
-            if len(barcode_weight) != 2:
-                raise UserError(_('Product code and Weight not Captured! Please try again!!'))
-            product = self.env['product.product'].search([('barcode', '=', barcode_weight[0])])
-            if not product:
-                raise UserError(_('Product not found!'))
-            weight = barcode_weight[1]
+            if len(barcode) > 20:
+                product_code = barcode[:16]  # extract the first 16 digits as the product code
+                weight_index = barcode.find('3201')  # find the index of the '3201' pattern
+                if weight_index == -1:  # if the pattern is not found, try the '3202' pattern
+                    weight_index = barcode.find('3202')
+                if weight_index == -1:  # if the pattern is still not found, raise an error
+                    raise UserError(_('Weight information not found in the barcode!'))
+                weight_string = barcode[weight_index + 4: weight_index + 10]
+                weight_scale = 1 if barcode[weight_index: weight_index + 4] == '3201' else 100
+
+                # Revised weight calculation
+                weight = float(weight_string[:-1] + '.' + weight_string[-1]) / weight_scale
+
+                weight_formatted = '{:.3f}'.format(weight)  # format the weight with 3 decimal places
+                print("www22222", weight_formatted, float(weight_formatted))
+                product = self.env['product.product'].search([('barcode', '=', product_code)])
+                print(product_code, "<<<weight>>>", weight_formatted)
+                if not product:
+                    raise UserError(_('Product not found!'))
+                self._add_product(product, weight_formatted)  # pass the formatted weight as float
+            else:
+                barcode_weight = barcode.split()
+                if len(barcode_weight) != 2:
+                    raise UserError(_('Product code and Weight not Captured! Please try again!!'))
+                product = self.env['product.product'].search([('barcode', '=', barcode_weight[0])])
+                if not product:
+                    raise UserError(_('Product not found!'))
+                weight = barcode_weight[1]
             self._add_product(product, weight)
         else:
             raise UserError(_('Barcode not detected!'))
