@@ -46,7 +46,7 @@
     <tr>
         <td colspan="5">Total Balance Due</td>
         <td class="text-right">
-            <span t-esc="total_balance_due"/>
+            <strong><span t-esc="total_balance_due"/></strong>
         </td>
     </tr>
 </tfoot>

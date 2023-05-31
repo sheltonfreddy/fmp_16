@@ -18,7 +18,7 @@ class CustomerDueInvoicesReport(models.AbstractModel):
                     LEFT JOIN res_partner p ON m.partner_id = p.id
                     WHERE m.partner_id = %s
                       AND m.state = 'posted'
-                    ORDER BY m.invoice_date
+                    ORDER BY m.date
                 """
         #rint(query,"QQQQQ", partner_id, date_from, date_to)
         self.env.cr.execute(query, (partner_id,))
@@ -43,10 +43,12 @@ class CustomerDueInvoicesReport(models.AbstractModel):
         for line in self.env.cr.dictfetchall():
             if line['move_type'] == 'out_invoice':
                 running_balance += line['amount_total']
+                line['move_type'] = 'Invoice'
             elif line['move_type'] == 'entry':  # If the line is a payment
                 running_balance -= line['amount_total']
-            line['balance'] = running_balance
-            total_balance_due = running_balance
+                line['move_type'] = 'Payment'
+            line['balance'] = round(running_balance, 2)
+            total_balance_due = round(running_balance, 2)
             report_lines.append(line)
 
         return {
