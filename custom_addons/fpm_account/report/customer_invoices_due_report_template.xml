@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="customer_invoices_due_report_template">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Customer Invoices Due Report</h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Partner</th>
+                            <th>Amount Total</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="lines" t-as="line">
+                            <td>
+                                <span t-esc="line['name']"/>
+                            </td>
+                            <td>
+                                <span t-esc="line['move_type']"/>
+                            </td>
+                            <td>
+                                <span t-esc="line['date']"/>
+                            </td>
+                            <td>
+                                <span t-esc="line['display_name']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="line['amount_total']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="line['balance']"/>
+                            </td>
+<!--                            <td class="text-right">-->
+<!--                                <span t-esc="line['running_total']"/>-->
+<!--                            </td>-->
+                        </tr>
+                    </tbody>
+                    <tfoot>
+    <tr>
+        <td colspan="5">Total Balance Due</td>
+        <td class="text-right">
+            <span t-esc="total_balance_due"/>
+        </td>
+    </tr>
+</tfoot>
+
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+
+
+        <!--record id="action_report_customer_due" model="ir.actions.report">
+            <field name="name">Customer Invoices Due Report</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">YOUR_MODULE_NAME.customer_due_report</field>
+            <field name="report_file">YOUR_MODULE_NAME.customer_due_report</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Customer Invoices Due Report'</field>
+        </record-->
+    </data>
+</odoo>

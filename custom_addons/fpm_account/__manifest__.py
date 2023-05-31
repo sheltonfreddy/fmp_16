@@ -7,11 +7,15 @@
     'category': 'Accounting',
     'sequence': 15,
     'summary': 'FPM Account Customisations',
-    'depends': ['account'],
+    'depends': ['account', 'fmp_reports'],
     'data': [
         'report/invoice_report_templates.xml',
         'report/invoice_report.xml',
-        # 'views/invoice_view.xml'
+        # 'views/invoice_view.xml',
+        'views/report.xml',
+        'report/customer_invoices_due_report_template.xml',
+        'wizard/partner_inv_report_view.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False
