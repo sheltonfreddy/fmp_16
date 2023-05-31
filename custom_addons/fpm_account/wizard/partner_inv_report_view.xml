@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Define the action to open the wizard -->
+        <record id="action_customer_invoices_report_wizard" model="ir.actions.act_window">
+            <field name="name">Customer Invoices Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.invoices.due.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="account.model_res_partner"/>
+        </record>
+
+        <!-- Define the wizard form view -->
+        <record id="view_customer_invoices_report_wizard_form" model="ir.ui.view">
+            <field name="name">customer.invoices.due.wizard.form</field>
+            <field name="model">customer.invoices.due.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Customer Invoices Report">
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <footer>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="menu_customer_invoices_due_report_wizard" model="ir.ui.menu">
+            <field name="name">Customer Invoices Due Report</field>
+            <field name="parent_id" ref="fmp_reports.menu_fpm_reports"/>
+            <field name="action" ref="action_customer_invoices_report_wizard"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+    </data>
+</odoo>
