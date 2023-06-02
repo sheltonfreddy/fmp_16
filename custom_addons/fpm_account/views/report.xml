@@ -7,4 +7,11 @@
             name="fpm_account.customer_invoices_due_report_template"
             file="fpm_account.customer_invoices_due_report_template"
             attachment_use="False"/>
+    <report id="product_packs_invoiced_report"
+            string="Product Case Report"
+            model="product.packs.wizard"
+            report_type="qweb-pdf"
+            name="fpm_account.product_packs_report_template"
+            file="fpm_account.product_packs_report_template"
+            attachment_use="False"/>
 </odoo>

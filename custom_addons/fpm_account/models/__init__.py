@@ -3,3 +3,4 @@
 
 from . import account
 from . import customer_due
+from . import product_packs_invoiced

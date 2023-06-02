@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Define the action to open the wizard -->
+        <record id="action_product_packs_invoiced_report_wizard" model="ir.actions.act_window">
+            <field name="name">Product Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.packs.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="account.model_product_product"/>
+        </record>
+
+        <!-- Define the wizard form view -->
+        <record id="view_product_packs_invoiced_report_wizard_form" model="ir.ui.view">
+            <field name="name">product.packs.invoiced.wizard.form</field>
+            <field name="model">product.packs.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product Report">
+                    <group>
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="date"/>
+                    </group>
+                    <footer>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="menu_product_packs_invoiced_report_wizard" model="ir.ui.menu">
+            <field name="name">Product Case Report</field>
+            <field name="parent_id" ref="fmp_reports.menu_fpm_reports"/>
+            <field name="action" ref="action_product_packs_invoiced_report_wizard"/>
+            <field name="sequence" eval="30"/>
+        </record>
+
+    </data>
+</odoo>

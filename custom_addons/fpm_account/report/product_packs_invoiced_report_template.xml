@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="product_packs_report_template">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+<!--                    <t t-foreach="docs" t-as="doc">-->
+                        <div class="page">
+                            <div class="header">
+                                <!-- Add your header content here -->
+                            </div>
+                            <div class="content">
+                                <h2>Products Cases Delivered</h2>
+                                <h3><t t-esc="date.strftime('%Y-%m-%d')" /> - <t t-esc="date.strftime('%A')" /></h3>
+
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th># Cases Delivered</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="report_data" t-as="data">
+                                            <tr>
+                                                <td><span t-esc="data['product']"/></td>
+                                                <td style="text-align:center;"><span t-esc="data['packs_invoiced']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <h2>Customer-wise Cases Delivered</h2>
+
+
+
+
+                             <t t-foreach="customer_data1.items()" t-as="item">
+    <table style="width:100%;">
+        <tr>
+            <td colspan="8">
+                <strong t-esc="item[0]" /> <!-- This is the product name -->
+            </td>
+        </tr>
+        <t t-foreach="enumerate(item[1].items())" t-as="indexed_customer_info">
+            <t t-set="customer_index" t-value="indexed_customer_info[0]" />
+            <t t-set="customer_info" t-value="indexed_customer_info[1]" />
+            <t t-if="customer_index % 4 == 0">
+                <tr>
+                    <td style="padding-left:2px;">
+                        <span t-esc="customer_info[0]"/> <!-- This is the customer name -->
+                    </td>
+                    <td style="width:20px; text-align:center;">
+                        <span t-esc="customer_info[1]"/> <!-- This is the total packs_invoiced for this customer -->
+                    </td>
+                    <t t-if="customer_index + 1 &lt; len(item[1])">
+                        <td style="padding-left:2px;">
+                            <span t-esc="list(item[1].items())[customer_index + 1][0]"/> <!-- Customer name for the next item -->
+                        </td>
+                        <td style="width:20px; text-align:center;;">
+                            <span t-esc="list(item[1].items())[customer_index + 1][1]"/> <!-- packs_invoiced for the next item -->
+                        </td>
+                    </t>
+                    <t t-if="customer_index + 2 &lt; len(item[1])">
+                        <td style="padding-left:2px;">
+                            <span t-esc="list(item[1].items())[customer_index + 2][0]"/> <!-- Customer name for the next item -->
+                        </td>
+                        <td style="width:20px; text-align:center;">
+                            <span t-esc="list(item[1].items())[customer_index + 2][1]"/> <!-- packs_invoiced for the next item -->
+                        </td>
+                    </t>
+                    <t t-if="customer_index + 3 &lt; len(item[1])">
+                        <td style="padding-left:2px;">
+                            <span t-esc="list(item[1].items())[customer_index + 3][0]"/> <!-- Customer name for the next item -->
+                        </td>
+                        <td style="width:20px; text-align:center;">
+                            <span t-esc="list(item[1].items())[customer_index + 3][1]"/> <!-- packs_invoiced for the next item -->
+                        </td>
+                    </t>
+                </tr>
+            </t>
+        </t>
+    </table>
+</t>
+
+
+                            </div>
+                            <div class="footer">
+                                <!-- Add your footer content here -->
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </template>
+
+    </data>
+</odoo>
