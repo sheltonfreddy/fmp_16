@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="invoiced_products_view" model="ir.ui.view">
+            <field name="name">Invoiced Products Reports</field>
+            <field name="model">invoiced.products</field>
+            <field name="arch" type="xml">
+                <form string="Invoiced Products">
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="display_quantity"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                   </form>
+                </field>
+            </record>
+
+
+
+    <record id="action_invoiced_products" model="ir.actions.act_window">
+        <field name="name">Invoiced Products</field>
+        <field name="res_model">invoiced.products</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="invoiced_products_view"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_invoiced_products"
+            name="Invoiced Products Report"
+            sequence="40"
+            action="action_invoiced_products"
+            groups="account.group_account_user,account.group_account_manager"
+            parent="menu_fpm_reports"/>
+
+    </data>
+</odoo>

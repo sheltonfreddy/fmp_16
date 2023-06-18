@@ -41,12 +41,12 @@
 <!--              sequence="5"/>-->
 
         <menuitem id="menu_fpm_reports"
-                  name="FPM Reports"
+                  name="FMP Reports"
                   sequence="1"
                   groups="account.group_account_user,account.group_account_manager"
-                  parent="account.menu_finance_configuration"/>
+                  parent="account.menu_finance_reports"/>
         <menuitem id="menu_partner_invoice"
-                name="Partner Invoicesssss"
+                name="Partner Invoices"
                 sequence="20"
                 action="action_partner_invoice_report_view"
                 groups="account.group_account_user,account.group_account_manager"

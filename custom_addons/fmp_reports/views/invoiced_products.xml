@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoiced_products">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <style>
+                        .page {
+                            font-family: Arial, sans-serif;
+                        }
+                        h3 {
+                            text-align: center;
+                            margin-bottom: 20px;
+                            color: #333;
+                        }
+                        .date-range {
+                            text-align: center;
+                            margin-bottom: 10px;
+                            font-weight: bold;
+                        }
+                        .table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        .table th, .table td {
+                            border: 1px solid #dddddd;
+                            text-align: left;
+                            padding: 8px;
+                        }
+                        .table th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                        }
+                        .text-right {
+                            text-align: right;
+                        }
+                    </style>
+                    <h3>Invoiced Products Report</h3>
+                    <div class="row">
+                        <div class="col-xs-12 date-range">
+                            <t t-if="data['form']['from_date']">From <span t-esc="data['form']['from_date']"/></t>
+                            <t t-if="data['form']['to_date']"> to <span t-esc="data['form']['to_date']"/></t>
+                        </div>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Product</th>
+                                <th># Cases</th>
+                                <t t-if="data['form']['display_quantity']">
+                                    <th>Quantity</th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <t t-foreach="data['report_data'].items()" t-as="item">
+                        <tr>
+                            <td>
+                                <!-- Display product name -->
+                                <span t-esc="item[0].display_name"/>
+                            </td>
+                            <td>
+                                <!-- Display packs -->
+                                <span t-esc="item[1]['packs']"/>
+                            </td>
+                            <!-- Conditionally display quantity -->
+                            <t t-if="data['form']['display_quantity']">
+                                <td>
+                                    <!-- Display quantity -->
+                                    <span t-esc="item[1]['quantity']"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -9,9 +9,12 @@
     'summary': 'FMP Reports',
     'depends': ['account', 'accounting_pdf_reports'],
     'data': [
+        'security/ir.model.access.csv',
         'views/report_invoice_partner_view.xml',
         'wizard/invoice_partner_wiz_view.xml',
         'views/invoice_partner.xml',
+        'wizard/invoiced_products_view.xml',
+        'views/invoiced_products.xml',
 
 
     ],

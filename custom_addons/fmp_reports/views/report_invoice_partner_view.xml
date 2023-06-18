@@ -9,6 +9,15 @@
             name="fmp_reports.report_invoice_partner"
             file="fmp_reports.report_invoice_partner"
         />
+    <report
+            id="action_report_invoiced_products"
+            model="invoiced.products.report"
+            string="Invoiced Products"
+            menu="False"
+            report_type="qweb-pdf"
+            name="fmp_reports.report_invoiced_products"
+            file="fmp_reports.report_invoiced_products"
+        />
 
 
 </odoo>
