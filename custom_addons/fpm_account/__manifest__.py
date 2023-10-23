@@ -11,7 +11,7 @@
     'data': [
         'report/invoice_report_templates.xml',
         'report/invoice_report.xml',
-        # 'views/invoice_view.xml',
+        'views/invoice_view.xml',
         'views/report.xml',
         'report/customer_invoices_due_report_template.xml',
         'report/product_packs_invoiced_report_template.xml',

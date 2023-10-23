@@ -76,6 +76,10 @@
                                 <strong>Source:</strong>
                                 <p class="m-0" t-field="o.invoice_origin"/>
                             </div>
+                            <div class="col-auto col-3 mw-100 mb-2" t-if="o.po_no" name="po_no">
+                                <strong>PO #:</strong>
+                                <p class="m-0" t-field="o.po_no"/>
+                            </div>
                             <div class="col-auto col-3 mw-100 mb-2" t-if="o.partner_id.ref" name="customer_code">
                                 <strong>Customer Code:</strong>
                                 <p class="m-0" t-field="o.partner_id.ref"/>

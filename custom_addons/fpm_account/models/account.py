@@ -1,8 +1,10 @@
 from odoo import api, fields, models, _
 
 
-# class AccountMove(models.Model):
-#     _inherit = 'account.move'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    po_no = fields.Char(string='PO #')
 #
 #     def invoice_print_without_pay(self):
 #         """ Print the invoice without payment
